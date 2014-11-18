@@ -42,9 +42,6 @@ var server = http.createServer(/*handleRequest.requestHandler*/ function(request
   }
 });
 
-server.setTimeout(2000, function(){
-  return "404";
-});
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
 

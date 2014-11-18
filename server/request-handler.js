@@ -13,18 +13,17 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var exports = module.exports = {};
+var fs = require('fs');
 
 //store message objects {"username":"Silvia","text":"message","roomname":"hello"}
-var results = [
-/*{'username': 'Silvia',
-              'text' : 'message',
-              'roomname' : 'hello'
-  },
- {'username': 'Amy',
-              'text' : 'sick',
-              'roomname' : 'home'
-  }*/
-];
+var results;
+  var obj;
+  fs.readFile('./log.txt', 'utf8', function (err, data) {
+    if (err) throw err;
+    obj = JSON.parse(data);
+    results = obj.results;
+    console.log('reading file');
+  });
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -63,9 +62,11 @@ var requestHandler = function(request, response) {
       results.push({'username': result.username, 'text': result.text, 'roomname': result.roomname});
 
     });
-  }else{
 
+  }else{
     statusCode = 200;
+    // console.log(obj.results);
+    // console.log('read file'+JSON.stringify(obj));
   }
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
@@ -80,6 +81,15 @@ var requestHandler = function(request, response) {
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
   response.end(JSON.stringify({results: results}));
+  fs.writeFile("./log.txt", JSON.stringify({results: results}), function(err) {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log("The file was saved!");
+    }
+  });
+
+
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
