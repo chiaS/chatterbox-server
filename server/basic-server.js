@@ -9,7 +9,7 @@ var url = require("url");
 // normally already claimed by another server and/or not accessible
 // so we'll use a standard testing port like 3000, other common development
 // ports are 8080 and 1337.
-var port = 3000;
+var port = 1337;
 
 // For now, since you're running this server on your local machine,
 // we'll have it listen on the IP address 127.0.0.1, which is a
@@ -40,6 +40,10 @@ var server = http.createServer(/*handleRequest.requestHandler*/ function(request
     console.log('failed');
     return "404";
   }
+});
+
+server.setTimeout(2000, function(){
+  return "404";
 });
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);

@@ -1,7 +1,7 @@
 var app = {
 
-  server: 'http://127.0.0.1:3000/classes',
-  
+  server: 'http://127.0.0.1:1337/classes',
+
   username: 'Silvia',
 
 
@@ -30,7 +30,7 @@ var app = {
       url: app.server,
       type: 'GET',
       contentType: 'application/json',
-  //    data: 'order=-createdAt',
+  //    data: {order=-createdAt},
       success: function (data) {
         var arr = data.results;
         var storage = {};
@@ -75,7 +75,7 @@ var app = {
   send : function(message){
     $.ajax({
       // always use this url
-      url: 'http://127.0.0.1:3000/classes',
+      url: 'http://127.0.0.1:1337/classes',
       type: 'POST',
       data: message,
       contentType: 'application/json',

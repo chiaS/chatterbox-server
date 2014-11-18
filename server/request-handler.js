@@ -16,14 +16,14 @@ var exports = module.exports = {};
 
 //store message objects {"username":"Silvia","text":"message","roomname":"hello"}
 var results = [
-{'username': 'Silvia',
+/*{'username': 'Silvia',
               'text' : 'message',
               'roomname' : 'hello'
   },
  {'username': 'Amy',
               'text' : 'sick',
               'roomname' : 'home'
-  }
+  }*/
 ];
 
 var requestHandler = function(request, response) {
@@ -63,9 +63,8 @@ var requestHandler = function(request, response) {
       results.push({'username': result.username, 'text': result.text, 'roomname': result.roomname});
 
     });
-
-
   }else{
+
     statusCode = 200;
   }
   // .writeHead() writes to the request line and headers of the response,
