@@ -1,4 +1,10 @@
 var app = {
+
+  server: 'http://127.0.0.1:3000/classes',
+  
+  username: 'Silvia',
+
+
   init: function(){
     $(document).ready(function(){
       app.fetch();
@@ -18,10 +24,9 @@ var app = {
       }, 30000);
     });
   },
-  server: 'http://127.0.0.1:1337/classes',
+
   fetch : function() {
     $.ajax({
-      // always use this url
       url: app.server,
       type: 'GET',
       contentType: 'application/json',
@@ -70,13 +75,14 @@ var app = {
   send : function(message){
     $.ajax({
       // always use this url
-      url: 'http://127.0.0.1:1337/classes',
+      url: 'http://127.0.0.1:3000/classes',
       type: 'POST',
       data: message,
       contentType: 'application/json',
 
       success : function (data) {
         $('#chats').html(JSON.stringify(data));
+        app.clearInputs();
         console.log('success!!!');
       },
       error: function (data) {
@@ -90,7 +96,10 @@ var app = {
   },
   clearMessages : function() {
     $('#chats').html('');
-
+  },
+  clearInputs :function(){
+    $('#inputMessage').val('');
+    $('#createRoom').val('');
   },
   addMessage : function(message) {
     var chat = "";
@@ -115,7 +124,7 @@ var app = {
   // },
   getMessage : function() {
     var message = document.getElementById('inputMessage').value;
-    var obj = {'username': 'Silvia',
+    var obj = {'username': app.username,
               'text' : message,
               'roomname' : $('#createRoom').val()
               };
