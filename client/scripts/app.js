@@ -18,7 +18,7 @@ var app = {
       }, 30000);
     });
   },
-  server: 'http://127.0.0.1:1337',
+  server: 'http://127.0.0.1:1337/classes',
   fetch : function() {
     $.ajax({
       // always use this url
@@ -27,8 +27,7 @@ var app = {
       contentType: 'application/json',
   //    data: 'order=-createdAt',
       success: function (data) {
-        console.log('hello'+ [data]);
-        var arr = data;
+        var arr = data.results;
         var storage = {};
 
         app.clearMessages();
@@ -71,7 +70,7 @@ var app = {
   send : function(message){
     $.ajax({
       // always use this url
-      url: 'http://127.0.0.1:1337',
+      url: 'http://127.0.0.1:1337/classes',
       type: 'POST',
       data: message,
       contentType: 'application/json',

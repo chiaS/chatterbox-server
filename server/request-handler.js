@@ -1,3 +1,4 @@
+
 /*************************************************************
 
 You should implement your request handler function in this file.
@@ -14,7 +15,7 @@ this file and include it in basic-server.js so that it actually works.
 var exports = module.exports = {};
 
 //store message objects {"username":"Silvia","text":"message","roomname":"hello"}
-var messages = [
+var results = [
 {'username': 'Silvia',
               'text' : 'message',
               'roomname' : 'hello'
@@ -40,7 +41,20 @@ var requestHandler = function(request, response) {
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
+
   console.log("Serving request type " + request.method + " for url " + request.url);
+
+  if(request.method === 'POST'){
+    request.on('data', function(data){
+      var result = JSON.parse(data);
+      console.log(data);
+      results.push({'username': result.username, 'text': result.text, 'roomname': result.roomname});
+
+    });
+  }
+
+
+
 
   // The outgoing status.
   var statusCode = 200;
@@ -53,6 +67,8 @@ var requestHandler = function(request, response) {
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
   headers['Content-Type'] = "application/json";
+  // headers['statusCode'] = statusCode;
+
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
@@ -66,8 +82,11 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
+  var obj={
+    results: results,
+  };
+  response.end(JSON.stringify(obj));
 
-  response.end(JSON.stringify(messages));
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
